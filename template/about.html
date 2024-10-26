@@ -1,0 +1,397 @@
+{% extends "base.html" %}
+
+{% block title %}
+    About Us - {{ shop_name }} - A Magical Candy Wonderland!
+{% endblock title %}
+
+{% block body %}
+    <style>
+        /* Base Styles */
+        .about-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #fff8f8 0%, #ffe8f7 100%);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated Background */
+        .candy-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .candy {
+            position: absolute;
+            opacity: 0.1;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        /* Welcome Title Section */
+        .welcome-title {
+            position: relative;
+            padding: 40px 20px;
+            text-align: center;
+            background: linear-gradient(45deg, #FFE5F1, #FFF5E6);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .welcome-title h1 {
+            font-size: 3rem;
+            color: #FF69B4;
+            margin: 0;
+            animation: rainbow 8s linear infinite;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-top: 15px;
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        /* Story Section */
+        .story-section {
+            position: relative;
+            padding: 30px;
+            background: linear-gradient(45deg, #E6F7FF, #F5E6FF);
+            border-radius: 15px;
+            margin: 30px 0;
+            transform: translateX(-100%);
+            animation: slideIn 1s forwards;
+        }
+
+        .story-section::before {
+            content: '📖';
+            font-size: 3rem;
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            animation: bounce 2s infinite;
+        }
+
+        /* Treats Section */
+        .treats-section {
+            margin: 40px 0;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1s;
+        }
+
+        .treats-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            color: #FF4500;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Why Choose Us Section */
+        .why-us-section {
+            position: relative;
+            padding: 30px;
+            background: linear-gradient(45deg, #FFE6F0, #FFE6E6);
+            border-radius: 15px;
+            margin: 30px 0;
+            transform: translateX(100%);
+            animation: slideIn 1s forwards 1.5s;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        /* Visit Section */
+        .visit-section {
+            position: relative;
+            padding: 40px;
+            background: linear-gradient(45deg, #FFB6C1, #87CEEB);
+            border-radius: 20px;
+            margin-top: 40px;
+            text-align: center;
+            transform: scale(0.8);
+            opacity: 0;
+            animation: popIn 1s forwards 2s;
+        }
+
+        .visit-section::before,
+        .visit-section::after {
+            content: '🎈';
+            position: absolute;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .visit-section::before {
+            left: 20px;
+            top: -20px;
+            animation-delay: 0.5s;
+        }
+
+        .visit-section::after {
+            right: 20px;
+            top: -20px;
+            animation-delay: 1s;
+        }
+
+        .visit-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #FF69B4;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .visit-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Animations */
+        @keyframes rainbow {
+            0% { color: #FF69B4; }
+            25% { color: #FF8C00; }
+            50% { color: #4169E1; }
+            75% { color: #32CD32; }
+            100% { color: #FF69B4; }
+        }
+
+        @keyframes slideIn {
+            to { transform: translateX(0); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popIn {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Interactive Elements */
+        .interactive-element {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .interactive-element:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mascot */
+        .mascot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 4rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .welcome-title h1 {
+                font-size: 2rem;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <!-- Animated Background -->
+    <div class="candy-background" id="candyBackground"></div>
+
+    <div class="about-section">
+        <!-- Welcome Section -->
+        <div class="welcome-title">
+            <h1>Welcome to the Magical World of {{ shop_name }}! ✨</h1>
+            <div class="welcome-subtitle">Where Every Sweet Dream Comes True!</div>
+        </div>
+
+        <!-- Story Section -->
+        <div class="story-section">
+            <h2>Our Magical Story</h2>
+            <p>
+                Once upon a time, in a kitchen filled with dreams and sugar sprinkles, {{ shop_name }} was born! 
+                We've been making children (and grown-ups!) smile with our magical treats ever since. 
+                Every candy we make is sprinkled with a little bit of magic and a whole lot of love! 🌟
+            </p>
+        </div>
+
+        <!-- Treats Section -->
+        <div class="treats-section">
+            <div class="treats-title">🍭 Our Magical Treats 🍬</div>
+            <ul class="specialties-list">
+                <li class="specialty-item magical-mints">
+                    <div class="specialty-title">Magical Mints</div>
+                    <div class="specialty-description">Cool and refreshing mints that make your breath sparkle with tiny stars!</div>
+                </li>
+                <li class="specialty-item rainbow-drops">
+                    <div class="specialty-title">Rainbow Drops</div>
+                    <div class="specialty-description">Tiny candies that taste like your favorite color and make you smile!</div>
+                </li>
+                <li class="specialty-item crystal-candies">
+                    <div class="specialty-title">Crystal Candies</div>
+                    <div class="specialty-description">Shimmering candies that glitter like precious gems!</div>
+                </li>
+                <li class="specialty-item chocolate-dreams">
+                    <div class="specialty-title">Chocolate Dreams</div>
+                    <div class="specialty-description">Smooth chocolate treats that make your wishes come true!</div>
+                </li>
+                <li class="specialty-item unicorn-pops">
+                    <div class="specialty-title">Rainbow Unicorn Pops</div>
+                    <div class="specialty-description">Magical lollipops that change color as you lick them!</div>
+                </li>
+                <li class="specialty-item dragon-candy">
+                    <div class="specialty-title">Dragon's Breath Cotton Candy</div>
+                    <div class="specialty-description">Cotton candy that makes you breathe harmless sparkly mist!</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Why Choose Us Section -->
+        <div class="why-us-section">
+            <h2>Why Kids Love Us! 🎪</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Colorful Fun</h3>
+                    <p>Every treat is a rainbow of happiness!</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✨</div>
+                    <h3>Magical Experience</h3>
+                    <p>Watch the magic happen with every bite!</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎁</div>
+                    <h3>Sweet Surprises</h3>
+                    <p>Special treats for special moments!</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💝</div>
+                    <h3>Made with Love</h3>
+                    <p>Every candy has a touch of magic!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visit Section -->
+        <div class="visit-section">
+            <h2>Come Join the Fun!</h2>
+            <p>
+                Step into our magical candy wonderland and let your imagination run wild! 
+                Bring your family and friends - there's enough magic for everyone! 
+            </p>
+            <a href="#" class="visit-button interactive-element">Find Your Way to Magic! 🎠</a>
+        </div>
+    </div>
+
+    <!-- Interactive Mascot -->
+    <div class="mascot" onclick="this.innerHTML = ['🍭','🍪','🍬','🍫'].includes(this.innerHTML) ? '👋' : '🍭'">
+        🍭
+    </div>
+
+    <script>
+        // Create falling candy background
+        function createCandyBackground() {
+            const candies = ['🍬', '🍭', '🍪', '🍫', '🧁', '🍡'];
+            const background = document.getElementById('candyBackground');
+            
+            for(let i = 0; i < 20; i++) {
+                const candy = document.createElement('div');
+                candy.className = 'candy';
+                candy.textContent = candies[Math.floor(Math.random() * candies.length)];
+                candy.style.left = Math.random() * 100 + 'vw';
+                candy.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                candy.style.opacity = Math.random() * 0.3;
+                candy.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                background.appendChild(candy);
+            }
+        }
+
+        // Initialize the background
+        createCandyBackground();
+
+        // Recreate background periodically
+        setInterval(() => {
+            const background = document.getElementById('candyBackground');
+            background.innerHTML = '';
+            createCandyBackground();
+        }, 20000);
+
+        // Add hover sound effect for interactive elements (optional)
+        document.querySelectorAll('.interactive-element').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                // Add sound effect if desired
+                // const hoverSound = new Audio('path/to/hover-sound.mp3');
+                // hoverSound.play();
+            });
+        });
+    </script>
+{% endblock body %}

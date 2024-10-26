@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+Contact
+{% endblock title %}
+{% block body %}
+<div class="container-fluid px-0">
+    <img src="https://static.vecteezy.com/system/resources/previews/000/295/660/original/world-of-candies-store-vector.jpg" class="d-block w-100 my-4" style="height: 500px; margin-left: 27%; width: 600px !important;" alt="" >
+    <h3 style="position: absolute; top: 320px; left: 48%;">Contact Us</h3>
+    </div>
+<div class="container" style="width: 65%;">
+    <form method="post" action="/contact">
+        {% csrf_token %}
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone number</label>
+        <input type="phone" class="form-control" id="phone" name="phone" placeholder="Enter your phone-no">
+      </div>
+      <div class="mb-3">
+        <label for="desc" class="form-label">Tell me what you want i will reach to you soon...</label>
+        <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">submit</button>
+    </form>
+</div>
+{% endblock body %}
