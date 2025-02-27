@@ -1,15 +1,19 @@
 {
-    "version": 2,
     "builds": [
       {
-        "src": "rdtcandy/wsgi.py",
-        "use": "@vercel/python"
+        "src": "myapp/wsgi.py",
+        "use": "@vercel/python",
+        "config": { "maxLambdaSize": "15mb" }
       }
     ],
     "routes": [
       {
+        "src": "/static/(.*)",
+        "dest": "/static/$1"
+      },
+      {
         "src": "/(.*)",
-        "dest": "rdtcandy/wsgi.py"
+        "dest": "myapp/wsgi.py"
       }
     ]
   }
